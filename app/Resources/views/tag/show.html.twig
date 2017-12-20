@@ -33,4 +33,11 @@
             {{ form_end(delete_form) }}
         </li>
     </ul>
+            
+    <div>
+        <h1>Posts</h1>
+    {% for post in tag.posts %}
+        {{ render(controller('AppBundle:Post:show', {'post': post})) }}
+    {% endfor %}
+    </div>        
 {% endblock %}
