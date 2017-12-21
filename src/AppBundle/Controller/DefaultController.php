@@ -17,7 +17,7 @@ class DefaultController extends Controller
         
         return $this->render('default/index.html.twig', array(
             'post' => $em->getRepository('AppBundle:Post')->findOneBy([]),
-            'tag' => $em->getRepository('AppBundle:Post')->findOneBy([]),
+            'tag' => $em->getRepository('AppBundle:Tag')->findOneBy([]),
         ));
     }
 }
