@@ -17,7 +17,7 @@ class PostController extends Controller
     /**
      * Lists all post entities.
      *
-     * @Route("/{_type}", name="post_index", defaults={"_type": "default"})
+     * @Route("/{_type}", name="post_index", defaults={"_type": "default"}, requirements={"_type":"|auth"})
      * @Method("GET")
      */
     public function indexAction()
@@ -34,7 +34,7 @@ class PostController extends Controller
     /**
      * Creates a new post entity.
      *
-     * @Route("/new/{_type}", name="post_new", defaults={"_type": "default"})
+     * @Route("/new/{_type}", name="post_new", defaults={"_type": "null"})
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request, $_type)
