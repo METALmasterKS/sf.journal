@@ -17,7 +17,7 @@ class PostController extends Controller
     /**
      * Lists all post entities.
      *
-     * @Route("/", name="post_index")
+     * @Route("/{_type}", name="post_index", defaults={"_type": "default"})
      * @Method("GET")
      */
     public function indexAction()
