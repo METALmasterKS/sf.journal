@@ -2,8 +2,10 @@
 
 namespace AppBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Post
@@ -11,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks
+ * 
+ * @UniqueEntity("name")
  */
 class Post
 {
@@ -28,6 +32,7 @@ class Post
      *
      * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $name;
     
@@ -44,6 +49,7 @@ class Post
      * @var string
      *
      * @ORM\Column(name="text", type="text", length=65535, nullable=true)
+     * @Assert\NotBlank()
      */
     private $text;
 
@@ -81,6 +87,8 @@ class Post
      *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      *      )
+     * 
+     * @Assert\Count(max=3)
      */
     private $tags;
 

@@ -40,7 +40,7 @@ class StringToTagTransformer implements DataTransformerInterface
     {
         // no tag name? It's optional, so that's ok
         if (!$string) {
-            return;
+            return array();
         }
         
         $tagNames = array_map('trim', explode(',', $string));
@@ -53,7 +53,7 @@ class StringToTagTransformer implements DataTransformerInterface
             return $tag->getName();
         }, $tags);
         
-        $notExistNames = array_diff($tagNames, $existNames);
+        $notExistNames = array_filter(array_diff($tagNames, $existNames), 'mb_strlen');
         
         foreach ($notExistNames as $name){
             $tag = new Tag();
