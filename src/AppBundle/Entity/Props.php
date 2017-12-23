@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Props
@@ -15,23 +16,25 @@ class Props
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\OneToOne(targetEntity="Post")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="author_id", type="integer")
+     * @ORM\Column(name="author", type="string", length=255)
      */
-    private $author_id;
+    private $author;
 
     /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=2048)
+     * 
+     * @Assert\Url()
      */
     private $url;
 
@@ -46,29 +49,6 @@ class Props
         return $this->id;
     }
 
-    /**
-     * Set authorId
-     *
-     * @param integer $authorId
-     *
-     * @return Props
-     */
-    public function setAuthorId($authorId)
-    {
-        $this->author_id = $authorId;
-
-        return $this;
-    }
-
-    /**
-     * Get authorId
-     *
-     * @return int
-     */
-    public function getAuthorId()
-    {
-        return $this->author_id;
-    }
 
     /**
      * Set url
@@ -93,5 +73,42 @@ class Props
     {
         return $this->url;
     }
-}
 
+    /**
+     * Set id
+     *
+     * @param \AppBundle\Entity\Post $id
+     *
+     * @return Props
+     */
+    public function setId(\AppBundle\Entity\Post $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return Props
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+}

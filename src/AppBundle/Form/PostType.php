@@ -23,7 +23,10 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('text')->add('date')
+        $builder
+            ->add('name')
+            ->add('text')
+            ->add('date')
             ->add('tags', TextType::class, [
                 'required' => false,
             ])
@@ -31,6 +34,8 @@ class PostType extends AbstractType
         
         $builder->get('tags')
             ->addModelTransformer( new StringToTagTransformer($this->manager));
+        
+        $builder->add('props', PropsType::class);
     }
     /**
      * {@inheritdoc}

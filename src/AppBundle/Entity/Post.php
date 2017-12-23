@@ -74,8 +74,8 @@ class Post
      */
     private $updatedAt;
     
-    /*
-     * @ORM\OneToOne(targetEntity="Props")
+    /**
+     * @ORM\OneToOne(targetEntity="Props", cascade={"persist"})
      * @ORM\JoinColumn(name="id", referencedColumnName="id", nullable=false)
      */
     private $props;
@@ -248,10 +248,20 @@ class Post
     }
     
     /**
+     *
+     * @ORM\PostPersist
+     */
+    public function setPropsId()
+    {
+        $this->props->setId($this);
+    }
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
+        //$this->props = new \AppBundle\Entity\Props();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -291,4 +301,27 @@ class Post
         return $this->tags;
     }
 
+    /**
+     * Set props
+     *
+     * @param \AppBundle\Entity\Props $props
+     *
+     * @return Post
+     */
+    public function setProps(\AppBundle\Entity\Props $props = null)
+    {
+        $this->props = $props;
+
+        return $this;
+    }
+
+    /**
+     * Get props
+     *
+     * @return \AppBundle\Entity\Props
+     */
+    public function getProps()
+    {
+        return $this->props;
+    }
 }
