@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="props")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PropsRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Props
 {
@@ -17,38 +18,52 @@ class Props
      * @var int
      *
      * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
      * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $post;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="author", type="string", length=255)
+     * @ORM\Column(name="author", type="string", length=255, nullable=true)
      */
     private $author;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=2048)
+     * @ORM\Column(name="url", type="string", length=2048, nullable=true)
      * 
      * @Assert\Url()
      */
     private $url;
 
-
     /**
-     * Get id
+     * Set author
      *
-     * @return int
+     * @param string $author
+     *
+     * @return Props
      */
-    public function getId()
+    public function setAuthor($author)
     {
-        return $this->id;
+        $this->author = $author;
+
+        return $this;
     }
 
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 
     /**
      * Set url
@@ -75,40 +90,30 @@ class Props
     }
 
     /**
-     * Set id
+     * Set post
      *
-     * @param \AppBundle\Entity\Post $id
+     * @param \AppBundle\Entity\Post $post
      *
      * @return Props
      */
-    public function setId(\AppBundle\Entity\Post $id)
+    public function setPost(\AppBundle\Entity\Post $post)
     {
-        $this->id = $id;
+        $this->post = $post;
 
         return $this;
     }
 
     /**
-     * Set author
+     * Get post
      *
-     * @param string $author
-     *
-     * @return Props
+     * @return \AppBundle\Entity\Post
      */
-    public function setAuthor($author)
+    public function getPost()
     {
-        $this->author = $author;
-
-        return $this;
+        return $this->post;
     }
-
-    /**
-     * Get author
-     *
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
+    
+    public function setId($id) {
+        $this->post = $id;
     }
 }

@@ -37,6 +37,15 @@
                 <th>Updatedat</th>
                 <td>{% if post.updatedAt %}{{ post.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ post.props.author }}</td>
+            </tr>
+            <tr>
+                <th>Link</th>
+                <td>{{ post.props.url }}</td>
+            </tr>
+            
         </tbody>
     </table>
 

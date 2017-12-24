@@ -39,7 +39,7 @@ class Tag
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      * 
      */
     private $posts;

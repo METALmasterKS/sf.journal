@@ -27,10 +27,12 @@ class PostType extends AbstractType
             ->add('name')
             ->add('text')
             ->add('date')
+        ;
+        
+        $builder
             ->add('tags', TextType::class, [
                 'required' => false,
-            ])
-        ;
+            ]);
         
         $builder->get('tags')
             ->addModelTransformer( new StringToTagTransformer($this->manager));

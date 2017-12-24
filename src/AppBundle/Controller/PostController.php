@@ -20,11 +20,16 @@ class PostController extends Controller
      * @Route("/{_type}", name="post_index", defaults={"_type": "default"}, requirements={"_type":"|auth"})
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($_type)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $posts = $em->getRepository('AppBundle:Post')->findAll();
+        
+        $postRepo = $em->getRepository('AppBundle:Post');
+        
+        if ($_type == 'auth') 
+            $posts = $postRepo->getAuthoredPosts();
+        else
+            $posts = $postRepo->findAll();
 
         return $this->render('post/index.html.twig', array(
             'posts' => $posts,

@@ -76,13 +76,13 @@ class Post
     
     /**
      * @ORM\OneToOne(targetEntity="Props", cascade={"persist"})
-     * @ORM\JoinColumn(name="id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
     private $props;
     
     /**
      * 
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
      * @ORM\JoinTable(name="posts_tags",
      *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
@@ -249,11 +249,11 @@ class Post
     
     /**
      *
-     * @ORM\PostPersist
+     * @ORM\PrePersist
      */
-    public function setPropsId()
-    {
-        $this->props->setId($this);
+    public function x()
+    {   
+        $this->props->setId($this->id);
     }
     
     /**
@@ -261,7 +261,7 @@ class Post
      */
     public function __construct()
     {
-        //$this->props = new \AppBundle\Entity\Props();
+        $this->props = new \AppBundle\Entity\Props();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -323,5 +323,19 @@ class Post
     public function getProps()
     {
         return $this->props;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     *
+     * @return Post
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
     }
 }
