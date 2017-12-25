@@ -17,7 +17,7 @@ class PostController extends Controller
     /**
      * Lists all post entities.
      *
-     * @Route("/{_type}", name="post_index", defaults={"_type": "default"}, requirements={"_type":"|auth"})
+     * @Route("/{_type}", name="post_index", defaults={"_type": null}, requirements={"_type":"|auth"})
      * @Method("GET")
      */
     public function indexAction($_type)
@@ -39,13 +39,13 @@ class PostController extends Controller
     /**
      * Creates a new post entity.
      *
-     * @Route("/new/{_type}", name="post_new", defaults={"_type": "null"})
+     * @Route("/new/{_type}", name="post_new", defaults={"_type": null})
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request, $_type)
     {
         $post = new Post();
-        $form = $this->createForm('AppBundle\Form\PostType', $post);
+        $form = $this->createForm("AppBundle\Form\PostType", $post, ['type' => $_type]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,7 +87,7 @@ class PostController extends Controller
     public function editAction(Request $request, Post $post)
     {
         $deleteForm = $this->createDeleteForm($post);
-        $editForm = $this->createForm('AppBundle\Form\PostType', $post);
+        $editForm = $this->createForm('AppBundle\Form\PostType', $post, ['type' => $post->getType()]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

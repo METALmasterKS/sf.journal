@@ -23,21 +23,25 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder
             ->add('name')
             ->add('text')
             ->add('date')
         ;
         
-        $builder
-            ->add('tags', TextType::class, [
-                'required' => false,
-            ]);
+        if ($options['type'] == 'auth') {
+            $builder->add('props', PropsType::class);
+        } else {
+            $builder
+                ->add('tags', TextType::class, [
+                    'required' => false,
+                ]);
+
+            $builder->get('tags')
+                ->addModelTransformer( new StringToTagTransformer($this->manager));
+        }
         
-        $builder->get('tags')
-            ->addModelTransformer( new StringToTagTransformer($this->manager));
-        
-        $builder->add('props', PropsType::class);
     }
     /**
      * {@inheritdoc}
@@ -45,7 +49,8 @@ class PostType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Post'
+            'data_class' => 'AppBundle\Entity\Post',
+            'type' => null,
         ));
     }
 

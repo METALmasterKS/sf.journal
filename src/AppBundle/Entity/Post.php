@@ -248,15 +248,6 @@ class Post
     }
     
     /**
-     *
-     * @ORM\PrePersist
-     */
-    public function x()
-    {   
-        $this->props->setId($this->id);
-    }
-    
-    /**
      * Constructor
      */
     public function __construct()
@@ -338,4 +329,10 @@ class Post
 
         return $this;
     }
+    
+    public function getType() 
+    {
+        return $this->getProps()->getAuthor() != null ? 'auth' : null;
+    }
+       
 }
